@@ -81,7 +81,3 @@ const Peer = window.Peer;
 
   peer.on('error', console.error);
 })();
-© 2022 GitHub, Inc.
-Terms
-Privacy
-Secur
