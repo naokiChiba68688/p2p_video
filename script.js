@@ -1,6 +1,6 @@
 const Peer = window.Peer;
 
-(async function main() {
+async function main() {
   const localVideo = document.getElementById('js-local-stream');
   const localId = document.getElementById('js-local-id');
   const callTrigger = document.getElementById('js-call-trigger');
@@ -80,8 +80,4 @@ const Peer = window.Peer;
   });
 
   peer.on('error', console.error);
-})();
-© 2022 GitHub, Inc.
-Terms
-Privacy
-Secur
+};
