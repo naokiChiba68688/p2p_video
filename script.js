@@ -80,8 +80,4 @@ async function main() {
   });
 
   peer.on('error', console.error);
-<<<<<<< HEAD
 };
-=======
-})();
->>>>>>> b3bf97d72196c22e93276c6e44a7df69f78e731e
