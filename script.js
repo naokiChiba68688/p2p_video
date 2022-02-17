@@ -2,11 +2,11 @@ const Peer = window.Peer;
 
 (async function main() {
   const localVideo = document.getElementById('js-local-stream');
-  const localId = document.getElementById('js-local-id');
-  const callTrigger = document.getElementById('js-call-trigger');
-  const closeTrigger = document.getElementById('js-close-trigger');
-  const remoteVideo = document.getElementById('js-remote-stream');
-  const remoteId = document.getElementById('js-remote-id');
+  const joinTrigger = document.getElementById('js-join-trigger');
+  const leaveTrigger = document.getElementById('js-leave-trigger');
+  const remoteVideos = document.getElementById('js-remote-streams');
+  const roomId = document.getElementById('js-room-id');
+  const roomMode = document.getElementById('js-room-mode');
   const meta = document.getElementById('js-meta');
   const sdkSrc = document.querySelector('script[src*=skyway]');
 
@@ -33,50 +33,47 @@ const Peer = window.Peer;
     debug: 3,
   }));
 
-  // Register caller handler
-  callTrigger.addEventListener('click', () => {
+  // Register join handler
+  joinTrigger.addEventListener('click', () => {
     // Note that you need to ensure the peer has connected to signaling server
     // before using methods of peer instance.
     if (!peer.open) {
       return;
     }
 
-    const mediaConnection = peer.call(remoteId.value, localStream);
-
-    mediaConnection.on('stream', async stream => {
-      // Render remote stream for caller
-      remoteVideo.srcObject = stream;
-      remoteVideo.playsInline = true;
-      await remoteVideo.play().catch(console.error);
+    const room = peer.joinRoom("roomName", {
+      mode: "mesh",
+      stream: localStream,
     });
 
-    mediaConnection.once('close', () => {
+    room.on('stream', async stream => {
+      const newVideo = document.createElement('video');
+      newVideo.srcObject = stream;
+      newVideo.playsInline = true;
+      // mark peerId to find it later at peerLeave event
+      newVideo.setAttribute('data-peer-id', stream.peerId);
+      remoteVideos.append(newVideo);
+      await newVideo.play().catch(console.error);
+    });
+    
+    room.on('peerLeave', peerId => {
+      const remoteVideo = remoteVideos.querySelector(
+        `[data-peer-id="${peerId}"]`
+      );
       remoteVideo.srcObject.getTracks().forEach(track => track.stop());
       remoteVideo.srcObject = null;
+      remoteVideo.remove();
     });
 
-    closeTrigger.addEventListener('click', () => mediaConnection.close(true));
-  });
-
-  peer.once('open', id => (localId.textContent = id));
-
-  // Register callee handler
-  peer.on('call', mediaConnection => {
-    mediaConnection.answer(localStream);
-
-    mediaConnection.on('stream', async stream => {
-      // Render remote stream for callee
-      remoteVideo.srcObject = stream;
-      remoteVideo.playsInline = true;
-      await remoteVideo.play().catch(console.error);
+    room.once('close', () => {
+      sendTrigger.removeEventListener('click', onClickSend);
+      Array.from(remoteVideos.children).forEach(remoteVideo => {
+        remoteVideo.srcObject.getTracks().forEach(track => track.stop());
+        remoteVideo.srcObject = null;
+        remoteVideo.remove();
+      });
     });
-
-    mediaConnection.once('close', () => {
-      remoteVideo.srcObject.getTracks().forEach(track => track.stop());
-      remoteVideo.srcObject = null;
-    });
-
-    closeTrigger.addEventListener('click', () => mediaConnection.close(true));
+    leaveTrigger.addEventListener('click', () => room.close(), { once: true });
   });
 
   peer.on('error', console.error);
