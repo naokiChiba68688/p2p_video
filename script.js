@@ -57,20 +57,20 @@ const Peer = window.Peer;
     });
     
     room.on('peerLeave', peerId => {
-      const remoteVideo = remoteStreams.querySelector(
+      const remoteStream = remoteStreams.querySelector(
         `[data-peer-id="${peerId}"]`
       );
-      remoteVideo.srcObject.getTracks().forEach(track => track.stop());
-      remoteVideo.srcObject = null;
-      remoteVideo.remove();
+      remoteStream.srcObject.getTracks().forEach(track => track.stop());
+      remoteStream.srcObject = null;
+      remoteStream.remove();
     });
 
     room.once('close', () => {
       sendTrigger.removeEventListener('click', onClickSend);
-      Array.from(remoteStreams.children).forEach(remoteVideo => {
-        remoteVideo.srcObject.getTracks().forEach(track => track.stop());
-        remoteVideo.srcObject = null;
-        remoteVideo.remove();
+      Array.from(remoteStreams.children).forEach(remoteStream => {
+        remoteStream.srcObject.getTracks().forEach(track => track.stop());
+        remoteStream.srcObject = null;
+        remoteStream.remove();
       });
     });
     leaveTrigger.addEventListener('click', () => room.close(), { once: true });
