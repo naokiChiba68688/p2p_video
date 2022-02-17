@@ -1,5 +1,5 @@
 const Peer = window.Peer;
-
+window.__SKYWAY_KEY__ = '96b366cf-59e8-4816-8240-fa8efa462b40';
 (async function main() {
   const localVideo = document.getElementById('js-local-stream');
   const joinTrigger = document.getElementById('js-join-trigger');
