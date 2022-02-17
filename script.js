@@ -46,6 +46,10 @@ const Peer = window.Peer;
       stream: localStream,
     });
 
+    room.on('open',()=>{
+      document.getElementById('room-id').textContent = room.id;
+    });
+
     room.on('stream', async stream => {
       const newVideo = document.createElement('video');
       newVideo.srcObject = stream;
