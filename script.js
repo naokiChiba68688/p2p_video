@@ -29,7 +29,7 @@ const Peer = window.Peer;
   await localVideo.play().catch(console.error);
 
   const peer = (window.peer = new Peer({
-    key: '96b366cf-59e8-4816-8240-fa8efa462b40',
+    key: window.__SKYWAY_KEY__,
     debug: 3,
   }));
 
@@ -41,21 +41,15 @@ const Peer = window.Peer;
       return;
     }
 
-    const room = peer.joinRoom("roomName", {
+    const room = peer.joinRoom(roomId.value, {
       mode: "mesh",
       stream: localStream,
-    });
-
-    room.on('open',()=>{
-      document.getElementById('room-id').textContent = room.id;
-      console.log(room.id);
     });
 
     room.on('stream', async stream => {
       const newVideo = document.createElement('video');
       newVideo.srcObject = stream;
       newVideo.playsInline = true;
-      console.log(room.id);
       // mark peerId to find it later at peerLeave event
       newVideo.setAttribute('data-peer-id', stream.peerId);
       remoteVideos.append(newVideo);

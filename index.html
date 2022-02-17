@@ -6,8 +6,6 @@
     <title>SkyWay - Room example</title>
   </head>
   <body>
-    <script src="//cdn.webrtc.ecl.ntt.com/skyway-4.4.3.js"></script>
-    <script src="./script.js"></script>
     <div class="container">
       <h1 class="heading">Room example</h1>
       <p class="note">
@@ -17,7 +15,6 @@
       <div class="room">
         <div>
           <video id="js-local-stream"></video>
-          <p id="room-id"></p>
           <input type="text" placeholder="Room Name" id="js-room-id">
           <button id="js-join-trigger">Join</button>
           <button id="js-leave-trigger">Leave</button>
@@ -26,5 +23,10 @@
       </div>
       <p class="meta" id="js-meta"></p>
     </div>
+    <script src="//cdn.webrtc.ecl.ntt.com/skyway-4.4.3.js"></script>
+    <script>
+        window.__SKYWAY_KEY__ = '96b366cf-59e8-4816-8240-fa8efa462b40';
+    </script>
+    <script src="./script.js"></script>
   </body>
 </html>
