@@ -48,6 +48,7 @@ const Peer = window.Peer;
 
     room.on('open',()=>{
       document.getElementById('room-id').textContent = room.id;
+      console.log(room.id);
     });
 
     room.on('stream', async stream => {
