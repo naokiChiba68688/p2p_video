@@ -4,6 +4,9 @@ const Peer = window.Peer;
   const localStream = document.getElementById('js-local-stream');
   const joinTrigger = document.getElementById('js-join-trigger');
   const leaveTrigger = document.getElementById('js-leave-trigger');
+  const remoteStreams = document.getElementById('js-remote-streams');
+  const roomId = document.getElementById('js-room-id');
+  const roomMode = document.getElementById('js-room-mode');
   const meta = document.getElementById('js-meta');
   const sdkSrc = document.querySelector('script[src*=skyway]');
 
@@ -54,20 +57,20 @@ const Peer = window.Peer;
     });
     
     room.on('peerLeave', peerId => {
-      const remoteStream = remoteStreams.querySelector(
+      const remoteVideo = remoteStreams.querySelector(
         `[data-peer-id="${peerId}"]`
       );
-      remoteStream.srcObject.getTracks().forEach(track => track.stop());
-      remoteStream.srcObject = null;
-      remoteStream.remove();
+      remoteVideo.srcObject.getTracks().forEach(track => track.stop());
+      remoteVideo.srcObject = null;
+      remoteVideo.remove();
     });
 
     room.once('close', () => {
       sendTrigger.removeEventListener('click', onClickSend);
-      Array.from(remoteStreams.children).forEach(remoteStream => {
-        remoteStream.srcObject.getTracks().forEach(track => track.stop());
-        remoteStream.srcObject = null;
-        remoteStream.remove();
+      Array.from(remoteStreams.children).forEach(remoteVideo => {
+        remoteVideo.srcObject.getTracks().forEach(track => track.stop());
+        remoteVideo.srcObject = null;
+        remoteVideo.remove();
       });
     });
     leaveTrigger.addEventListener('click', () => room.close(), { once: true });
