@@ -1,12 +1,9 @@
 const Peer = window.Peer;
-window.__SKYWAY_KEY__ = '96b366cf-59e8-4816-8240-fa8efa462b40';
+
 (async function main() {
-  const localVideo = document.getElementById('js-local-stream');
+  const localStream = document.getElementById('js-local-stream');
   const joinTrigger = document.getElementById('js-join-trigger');
   const leaveTrigger = document.getElementById('js-leave-trigger');
-  const remoteVideos = document.getElementById('js-remote-streams');
-  const roomId = document.getElementById('js-room-id');
-  const roomMode = document.getElementById('js-room-mode');
   const meta = document.getElementById('js-meta');
   const sdkSrc = document.querySelector('script[src*=skyway]');
 
@@ -23,10 +20,10 @@ window.__SKYWAY_KEY__ = '96b366cf-59e8-4816-8240-fa8efa462b40';
     .catch(console.error);
 
   // Render local stream
-  localVideo.muted = true;
-  localVideo.srcObject = localStream;
-  localVideo.playsInline = true;
-  await localVideo.play().catch(console.error);
+  localStream.muted = true;
+  localStream.srcObject = localStream;
+  localStream.playsInline = true;
+  await localStream.play().catch(console.error);
 
   const peer = (window.peer = new Peer({
     key: window.__SKYWAY_KEY__,
@@ -52,25 +49,25 @@ window.__SKYWAY_KEY__ = '96b366cf-59e8-4816-8240-fa8efa462b40';
       newVideo.playsInline = true;
       // mark peerId to find it later at peerLeave event
       newVideo.setAttribute('data-peer-id', stream.peerId);
-      remoteVideos.append(newVideo);
+      remoteStreams.append(newVideo);
       await newVideo.play().catch(console.error);
     });
     
     room.on('peerLeave', peerId => {
-      const remoteVideo = remoteVideos.querySelector(
+      const remoteStream = remoteStreams.querySelector(
         `[data-peer-id="${peerId}"]`
       );
-      remoteVideo.srcObject.getTracks().forEach(track => track.stop());
-      remoteVideo.srcObject = null;
-      remoteVideo.remove();
+      remoteStream.srcObject.getTracks().forEach(track => track.stop());
+      remoteStream.srcObject = null;
+      remoteStream.remove();
     });
 
     room.once('close', () => {
       sendTrigger.removeEventListener('click', onClickSend);
-      Array.from(remoteVideos.children).forEach(remoteVideo => {
-        remoteVideo.srcObject.getTracks().forEach(track => track.stop());
-        remoteVideo.srcObject = null;
-        remoteVideo.remove();
+      Array.from(remoteStreams.children).forEach(remoteStream => {
+        remoteStream.srcObject.getTracks().forEach(track => track.stop());
+        remoteStream.srcObject = null;
+        remoteStream.remove();
       });
     });
     leaveTrigger.addEventListener('click', () => room.close(), { once: true });
