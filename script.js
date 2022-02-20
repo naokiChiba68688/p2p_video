@@ -28,6 +28,13 @@ const Peer = window.Peer;
     debug: 3,
   }));
 
+  let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let rand_str = '';
+  for ( var i = 0; i < 8; i++ ) {
+    rand_str += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  console.log(rand_str);
+
   // Register join handler
   joinTrigger.addEventListener('click', () => {
     // Note that you need to ensure the peer has connected to signaling server
