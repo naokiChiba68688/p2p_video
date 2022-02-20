@@ -33,7 +33,8 @@ const Peer = window.Peer;
   for ( var i = 0; i < 8; i++ ) {
     rand_str += chars.charAt(Math.floor(Math.random() * chars.length));
   }
-  console.log(rand_str);
+  let joinId = document.getElementById('room_id');
+  joinId.innerText = rand_str;
 
   // Register join handler
   joinTrigger.addEventListener('click', () => {
