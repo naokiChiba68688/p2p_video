@@ -9,6 +9,9 @@
     #room_id{
       margin:2px 0;
     }
+    #shareUrl{
+      margin:2px 0;
+    }
   </style>
   <body>
     <div class="container">
@@ -18,7 +21,8 @@
       <div class="room">
         <div>
           <video id="js-local-stream"></video>
-          <p id="room_id"></p>
+          <p id="room_id"></p><br>
+          <p id="shareUrl"></p>
           <input type="text" placeholder="Room Name" id="js-room-id">
           <button id="js-join-trigger">Join</button>
           <button id="js-leave-trigger">Leave</button>

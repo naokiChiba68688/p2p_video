@@ -38,18 +38,18 @@ const Peer = window.Peer;
   if(urlParameter == ''){
     let idBox = document.getElementById('js-room-id');
     idBox.value = rand_str;
-    console.log(urlParameter);
   }else{
-    console.log(urlParameter);
     let urlParameters = urlParameter.split('=');
-    console.log(urlParameters[1]);
+    let idBox = document.getElementById('js-room-id');
+    idBox.value = urlParameters[1];
   }
-  
 
   let triggerButton = document.getElementById('js-join-trigger');
   triggerButton.click;
 
-  // let joinUrl = document.
+  let joinUrl = document.getElementById('shareUrl');
+  joinUrl.innerHTML = location.href + '?id=' + rand_str;
+  
 
 
   // Register join handler
