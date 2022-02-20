@@ -49,6 +49,7 @@ const Peer = window.Peer;
 
   let joinUrl = document.getElementById('shareUrl');
   joinUrl.innerHTML = location.href + '?id=' + rand_str;
+  console.log(location.href + '?id=' + rand_str);
   
 
 
