@@ -34,7 +34,7 @@ const Peer = window.Peer;
     rand_str += chars.charAt(Math.floor(Math.random() * chars.length));
   }
   let joinId = document.getElementById('room_id');
-  joinId.innerText = rand_str;
+  joinId.innerHTML = rand_str;
 
   // Register join handler
   joinTrigger.addEventListener('click', () => {
