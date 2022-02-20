@@ -32,6 +32,9 @@ const Peer = window.Peer;
   let joinId = document.getElementById('room_id');
   joinId.innerHTML = rand_str;
 
+  let idBox = document.getElementById('js-room-id');
+  idBox.value = rand_str;
+
   // Register join handler
   joinTrigger.addEventListener('click', () => {
     // Note that you need to ensure the peer has connected to signaling server
