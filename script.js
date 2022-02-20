@@ -38,7 +38,9 @@ const Peer = window.Peer;
   if(urlParameter == ''){
     let idBox = document.getElementById('js-room-id');
     idBox.value = rand_str;
+    console.log(urlParameter);
   }else{
+    console.log(urlParameter);
     console.log('hello world');
   }
   
