@@ -29,11 +29,16 @@ const Peer = window.Peer;
   for ( var i = 0; i < 8; i++ ) {
     rand_str += chars.charAt(Math.floor(Math.random() * chars.length));
   }
+
   let joinId = document.getElementById('room_id');
   joinId.innerHTML = rand_str;
 
   let idBox = document.getElementById('js-room-id');
   idBox.value = rand_str;
+
+  let triggerButton = document.getElementById('js-join-trigger');
+  triggerButton.click;
+
 
   // Register join handler
   joinTrigger.addEventListener('click', () => {
