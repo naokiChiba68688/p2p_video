@@ -41,7 +41,8 @@ const Peer = window.Peer;
     console.log(urlParameter);
   }else{
     console.log(urlParameter);
-    console.log('hello world');
+    let urlParameters = urlParameter.split('=');
+    console.log(urlParameters[1]);
   }
   
 
