@@ -33,11 +33,20 @@ const Peer = window.Peer;
   let joinId = document.getElementById('room_id');
   joinId.innerHTML = rand_str;
 
-  let idBox = document.getElementById('js-room-id');
-  idBox.value = rand_str;
+  let urlParameter = location.search;
+
+  if(urlParameter == ''){
+    let idBox = document.getElementById('js-room-id');
+    idBox.value = rand_str;
+  }else{
+    console.log('hello world');
+  }
+  
 
   let triggerButton = document.getElementById('js-join-trigger');
   triggerButton.click;
+
+  // let joinUrl = document.
 
 
   // Register join handler
