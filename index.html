@@ -12,6 +12,17 @@
     #shareUrl{
       margin:2px 0;
     }
+    @media screen and (max-width:767px) {
+      video{
+        width: 100%;
+      }
+    }
+    @media screen and (min-width:768px) {
+      video{
+        width: calc(100%/3);
+      }
+    }
+    
   </style>
   <body>
     <div class="container">
@@ -22,7 +33,9 @@
         <div>
           <video id="js-local-stream"></video>
           <p id="room_id"></p>
-          <a id="shareUrl"></a><br>
+          <a id="shareUrl"></a>
+          <button onclick="copyToClipboard()">Copy</button>
+          <br>
           <input type="text" placeholder="Room Name" id="js-room-id">
           <button id="js-join-trigger">Join</button>
           <button id="js-leave-trigger">Leave</button>

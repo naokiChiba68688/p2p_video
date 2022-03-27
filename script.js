@@ -90,3 +90,9 @@ const Peer = window.Peer;
 
   peer.on('error', console.error);
 })();
+
+function copyToClipboard() {
+  var clipboardTarget = document.getElementById("shareUrl");
+  var clipboardText = clipboardTarget.innerText;
+  navigator.clipboard.writeText(clipboardText);
+}
