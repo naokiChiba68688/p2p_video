@@ -5,7 +5,6 @@ const Peer = window.Peer;
   const joinTrigger = document.getElementById('js-join-trigger');
   const leaveTrigger = document.getElementById('js-leave-trigger');
   const remoteVideos = document.getElementById('js-remote-streams');
-
   const localStream = await navigator.mediaDevices
     .getUserMedia({
       audio: true,
@@ -13,14 +12,13 @@ const Peer = window.Peer;
     })
     .catch(console.error);
 
-  // Render local stream
   localVideo.muted = true;
   localVideo.srcObject = localStream;
   localVideo.playsInline = true;
   await localVideo.play().catch(console.error);
 
   const peer = (window.peer = new Peer({
-    key: window.__SKYWAY_KEY__,
+    key: '96b366cf-59e8-4816-8240-fa8efa462b40',
     debug: 3,
   }));
 
@@ -51,10 +49,7 @@ const Peer = window.Peer;
   joinUrl.innerHTML = location.href + '?id=' + rand_str;
   joinUrl.href = location.href + '?id=' + rand_str;
 
-  // Register join handler
   joinTrigger.addEventListener('click', () => {
-    // Note that you need to ensure the peer has connected to signaling server
-    // before using methods of peer instance.
     if (!peer.open) {
       return;
     }
@@ -68,13 +63,11 @@ const Peer = window.Peer;
       const newVideo = document.createElement('video');
       newVideo.srcObject = stream;
       newVideo.playsInline = true;
-      // mark peerId to find it later at peerLeave event
       newVideo.setAttribute('data-peer-id', stream.peerId);
       remoteVideos.append(newVideo);
       await newVideo.play().catch(console.error);
     });
 
-    // for closing room members
     room.on('peerLeave', peerId => {
       const remoteVideo = remoteVideos.querySelector(
         `[data-peer-id="${peerId}"]`
@@ -84,7 +77,6 @@ const Peer = window.Peer;
       remoteVideo.remove();
     });
 
-    // for closing myself
     room.once('close', () => {
       sendTrigger.removeEventListener('click', onClickSend);
       Array.from(remoteVideos.children).forEach(remoteVideo => {
@@ -98,3 +90,9 @@ const Peer = window.Peer;
 
   peer.on('error', console.error);
 })();
+
+function copyToClipboard() {
+  var clipboardTarget = document.getElementById("shareUrl");
+  var clipboardText = clipboardTarget.innerText;
+  navigator.clipboard.writeText(clipboardText);
+}
